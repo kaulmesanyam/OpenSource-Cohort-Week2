@@ -2,15 +2,19 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/handleSumRequest', (req, res) => {
+app.get('/sendCounterInQuery', (req, res) => {
     let calculate = req.query.counter;
     let calculatedSum = calculateSum(calculate);
     let response = `The sum is: ${calculatedSum}`;
     res.send(response);
 })
 
-app.post('/handlePostRequest', (req, res) => {
-    res.send("Post request handeled successfully")
+app.post('/sendCounterInHeader', (req, res) => {
+    let calculate = req.headers.counter;
+    console.log(req.headers);
+    let calculatedSum = calculateSum(+calculate);
+    let response = `The sum is: ${calculatedSum}`;
+    res.send(response);
 });
 
 
