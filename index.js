@@ -7,13 +7,16 @@ app.use(bodyParser.json());
 app.use(middleware1);
 
 function middleware1(req, res, next) {
-    console.log(`From inside the middleware: ${req.body.counter}`);
-    if( req.body.counter < 1000000) {
+    if( req.body.counter == undefined || req.body.counter < 1000000) {
         next();
     } else {
         res.status(411).send("Counter sent is a very big number")
     }
 }
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+})
 
 app.get('/sendCounterInQuery', (req, res) => {
     let calculate = req.query.counter;
@@ -30,11 +33,15 @@ app.post('/sendCounterInHeader', (req, res) => {
 });
 
 app.post('/sendCounterInBody', (req, res) => {
-    console.log(req.body);
-    let calculate = req.body.counter;
-    let calculatedSum = calculateSum(+calculate);
-    let response = `The sum is: ${calculatedSum}`;
-    res.send(response);
+    let counter = req.body.counter;
+    
+    let calculatedSum = calculateSum(+counter);
+    let calculatedMul = calculateMul(+counter);
+    let answerObj = {
+        sum: calculatedSum,
+        mul: calculatedMul
+    }
+    res.send(answerObj);
 });
 
 
@@ -46,6 +53,14 @@ function calculateSum(counter) {
         sum += i;
     }
     return sum;
+}
+
+function calculateMul(counter) {
+    let mul = 1;
+    for(let i = 1; i <= counter; i++) {
+        mul *= i;
+    }
+    return mul;
 }
 
  app.listen(port, () => {
