@@ -3,12 +3,16 @@ const bodyParser = require('body-parser');
 const app = express()
 const port = 3000
 
-app.use(middleware1);
 app.use(bodyParser.json());
+app.use(middleware1);
 
 function middleware1(req, res, next) {
-    console.log(`From inside the middleware: ${req.headers.counter}`);
-    next();
+    console.log(`From inside the middleware: ${req.body.counter}`);
+    if( req.body.counter < 1000000) {
+        next();
+    } else {
+        res.status(411).send("Counter sent is a very big number")
+    }
 }
 
 app.get('/sendCounterInQuery', (req, res) => {
