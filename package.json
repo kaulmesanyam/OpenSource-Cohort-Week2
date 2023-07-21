@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "week-2",
   "version": "1.0.0",
   "description": "",
@@ -11,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.1"
   }
 }
