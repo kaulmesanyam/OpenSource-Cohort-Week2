@@ -2,6 +2,13 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+app.use(middleware1);
+
+function middleware1(req, res, next) {
+    console.log(req.headers.counter);
+    next();
+}
+
 app.get('/sendCounterInQuery', (req, res) => {
     let calculate = req.query.counter;
     let calculatedSum = calculateSum(calculate);
